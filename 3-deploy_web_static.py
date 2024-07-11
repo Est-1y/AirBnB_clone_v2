@@ -1,19 +1,16 @@
 #!/usr/bin/python3
-
-from datetime import datetime
-from fabric.api import local
-from fabric.api import env
-from fabric.api import put
 import os.path
+from datetime import datetime
+from fabric.api import env
+from fabric.api import local
+from fabric.api import put
 from fabric.api import run
 
 env.hosts = ['100.27.4.8', '18.207.1.51']
 
 
 def do_pack():
-    """
-    Generate a target gzipped archive.
-    """
+    """Creating a tar gzipped archive."""
     dt = datetime.utcnow()
     file = "versions/web_static_{}{}{}{}{}{}.tgz".format(dt.year,
                                                          dt.month,
@@ -30,8 +27,7 @@ def do_pack():
 
 
 def do_deploy(archive_path):
-    """
-    Distributing an archive to a server
+    """script ceating and distributing an archive
     """
     if os.path.isfile(archive_path) is False:
         return False
@@ -66,9 +62,7 @@ def do_deploy(archive_path):
 
 
 def deploy():
-    """
-    Genearting and distributing an archive
-    """
+    """Create archive and distribute it"""
     file = do_pack()
     if file is None:
         return False
