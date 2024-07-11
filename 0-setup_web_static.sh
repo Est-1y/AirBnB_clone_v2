@@ -1,26 +1,23 @@
 #!/usr/bin/env bash
-# setting up web servers for web static
+# setting up web servers
+apt update -y
+apt install -y nginx
 
-# Nginx installation
-sudo apt-get update
-sudo apt-get -y install nginx
+mkdir -p /data/web_static/releases/test/
+mkdir -p /data/web_static/shared/
 
-# folders
-sudo mkdir -p /data/web_static/releases/test /data/web_static/shared
+echo "<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <p>Nginx server test</p>
+  </body>
+</html>" | tee /data/web_static/releases/test/index.html
 
-# HTML file formation
-echo "<html><head></head><body>Holberton School</body></html>" | sudo tee /data/web_static/releases/test/index.html
+ln -sf /data/web_static/releases/test/ /data/web_static/current
 
-# link formation
-sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
+chown -R ubuntu:ubuntu /data
 
-# ownership allocation
-sudo chown -R ubuntu:ubuntu /data/
-
-# update
-sudo sed -i 's|^.*server_name.*$|&\n\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n|' /etc/nginx/sites-available/default
-
-
+sudo sed -i '39 i\ \tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}\n' /etc/nginx/sites-enabled/default
 sudo service nginx restart
-
-exit 0
