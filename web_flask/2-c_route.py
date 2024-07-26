@@ -8,19 +8,19 @@ app.url_map.strict_slashes = False
 
 @app.route('/')
 def hello_hbnb():
-    """print web"""
+    """through route printing web"""
     return 'Hello HBNB!'
 
 
 @app.route('/hbnb')
 def hbnb():
-    """print web"""
+    """through route printing web"""
     return 'HBNB'
 
 
 @app.route('/c/<text>')
 def c_is_fun(text):
-    """print C followed by the value of the text variable"""
+    """printing C"""
     return 'C {}'.format(text.replace('_', ' '))
 
 
